@@ -6,7 +6,7 @@ import Button from '../src/Components/Button'
 function App() {
   return (
     <div className="App">
-      <Button label='Small Button' size='small'/>
+      <Button label='s' size='small' onClick={(event)=>console.log(event)}/>
     </div>
   );
 }
