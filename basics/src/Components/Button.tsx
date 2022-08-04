@@ -2,12 +2,14 @@ import styled from 'styled-components'
 
 export type ButtonSize = 'small'|'large'
 export type ButtonPalette = 'danger'| 'dark' | 'default' | 'primary'
+export type ButtonType = 'submit' | 'button'
  
 export type ButtonProps = {
     label: string
+    type?: ButtonType
     size: ButtonSize
     palette: ButtonPalette
-    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const width = ({size}:ButtonProps )=>
@@ -34,10 +36,10 @@ background: ${background(props)};
 })
 
 
-const Button: React.FC<ButtonProps> = ({label, size,palette, onClick}: ButtonProps)=>
+const Button: React.FC<ButtonProps> = ({label, size,palette, type='button', onClick}: ButtonProps)=>
 {
 return (
-    <StyledButton label={label} size={size} onClick={onClick} palette={palette}>{label}</StyledButton>
+    <StyledButton label={label} size={size} type={type}  palette={palette} onClick={onClick}>{label} </StyledButton>
 )
 
 }
