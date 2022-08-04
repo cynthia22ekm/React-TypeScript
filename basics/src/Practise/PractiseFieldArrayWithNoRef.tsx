@@ -2,7 +2,8 @@ import { useForm, useFieldArray } from "react-hook-form"
 import styled from "styled-components"
 import Button from "../Components/Button"
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
+import * as yup from 'yup'
+import { useCallback } from "react"
 
 type FormValues = {
 
@@ -21,7 +22,7 @@ padding: 10px;
 const newUser = ()=> ({firstName: '',lastName: '',age:0,gender:''})
 
 const genders = [{gender: 'male'}, {gender: 'female'}]
-const schema = yup.object().shape({}).required
+const schema = yup.object().shape({ firstName: yup.string().required('FirstName is Required'), lastName: yup.string().required()})
 
 const PractiseFieldArrayWithNoRef: React.FC = ()=> {
 
@@ -29,13 +30,13 @@ const {register, formState:{errors}, handleSubmit, control} = useForm<{registrat
 
 const {fields, append, remove} = useFieldArray({control, name: 'registration'})
 
-const onSubmit = (data:FormValues[])=> {
-console.log(data)
-}
+const submitHandler = useCallback((values: {registration: FormValues[]})=> {
+console.log(values.registration)}, []
+)
 
 
     return (
-        <div>
+        <form onSubmit={handleSubmit(submitHandler)}>
             { fields.map((field, index) =>(
                 <div key={field.id}>
 <StyledInput {...register(`registration.${index}.firstName`)} />
@@ -52,8 +53,8 @@ console.log(data)
 
            )) }
 <Button size='small' label='Append' onClick={()=> append(newUser())} palette='primary'/>
-<Button size='small' label='Save' onClick={handleSubmit(onSubmit)} palette='primary'/>
-        </div>
+<Button size='small' label='Save' type='submit' palette='primary'/>
+        </form>
     )
 }
 
