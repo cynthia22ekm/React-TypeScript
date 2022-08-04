@@ -2,12 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from '../src/Components/Button'
+import PractiseFieldArray from './Practise/PractiseFieldArray';
 
 function App() {
   return (
-    <div className="App">
-      <Button label='s' size='small' palette='primary' onClick={(event)=>console.log(event)}/>
-    </div>
+
+      <PractiseFieldArray/>
+
   );
 }
 
