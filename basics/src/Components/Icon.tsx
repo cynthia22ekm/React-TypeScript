@@ -1,12 +1,13 @@
 import { ElementType } from "react";
 
 type IconProps = {
-  className: string;
+  className?: string;
+  height?: number | string;
   vector: ElementType;
 };
 
-const Icon: React.FC<IconProps> = ({ className, vector: Vector }) => {
-  return <Vector className={className} color={"blue"} />;
+const Icon: React.FC<IconProps> = ({ className, height, vector: Vector }) => {
+  return <Vector className={className} height={height} />;
 };
 
 export default Icon;
