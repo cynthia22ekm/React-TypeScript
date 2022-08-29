@@ -9,7 +9,16 @@ import { Info } from "./Components/SVG";
 
 function App() {
   return (
-    <TextInput iconVectorLeft={Info} type={"text"} placeholder={"Enter Name"} />
+    <div>
+      <div>The Complete Components</div>
+      <TextInput
+        iconVectorLeft={Info}
+        type={"text"}
+        placeholder={"Enter Name"}
+      />
+      <br />
+      <Button label={"Submit"} size={"small"} palette={"default"} />
+    </div>
   );
 }
 
