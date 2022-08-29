@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
-import { DefaultTheme } from "styled-components";
+import { StyledProps } from "./types";
 
 type InputSize = "small" | "large";
 
@@ -33,21 +33,23 @@ export type TextInputProps = {
 type StyledInputProps = Partial<Omit<TextInputProps, "size">> & {
   inputSize: InputSize;
   focused?: boolean;
-  theme: DefaultTheme;
-};
+} & StyledProps;
+
 const background = ({ disabled, theme }: StyledInputProps) =>
-  disabled ? theme.colors.default[100] : theme.colors.default[200];
+  disabled ? theme.colors?.default[100] : theme.colors?.default[200];
 
 const border = ({ hasErrors, theme }: StyledInputProps) =>
-  hasErrors ? `1px solid ${theme.colors.danger[400]}` : "1px solid transparent";
+  hasErrors
+    ? `1px solid ${theme.colors?.danger[400]}`
+    : "1px solid transparent";
 
-const borderFocus = ({ theme }: StyledInputProps) =>
-  `1px solid ${theme.colors.primary[400]}`;
+const borderFocus = ({ theme }: StyledProps) =>
+  `1px solid ${theme.colors?.primary[400]}`;
 
-const borderRadius = ({ theme }: StyledInputProps) => theme.radius.medium;
+const borderRadius = ({ theme }: StyledProps) => theme.radius?.medium;
 
 const color = ({ disabled, theme }: StyledInputProps) =>
-  disabled ? theme.colors.default[500] : theme.colors.default[600];
+  disabled ? theme.colors?.default[500] : theme.colors?.default[600];
 
 const height = ({ inputSize }: StyledInputProps) =>
   ({
@@ -57,12 +59,11 @@ const height = ({ inputSize }: StyledInputProps) =>
 
 const typography = ({ inputSize, theme }: StyledInputProps) =>
   ({
-    large: theme.typography.desktop["label large regular"],
-    small: theme.typography.desktop["label small regular"],
+    large: theme.typography?.desktop["label large regular"],
+    small: theme.typography?.desktop["label small regular"],
   }[inputSize]);
 
-const placeholderColor = ({ theme }: StyledInputProps) =>
-  theme.colors.default[500];
+const placeholderColor = ({ theme }: StyledProps) => theme.colors?.default[500];
 
 const iconPosition = ({ inputSize }: StyledInputProps) =>
   ({
@@ -72,12 +73,12 @@ const iconPosition = ({ inputSize }: StyledInputProps) =>
 
 const iconColor = ({ disabled, focused, hasErrors, theme }: StyledInputProps) =>
   disabled
-    ? theme.colors.default[500]
+    ? theme.colors?.default[500]
     : focused
-    ? theme.colors.primary[400]
+    ? theme.colors?.primary[400]
     : hasErrors
-    ? theme.colors.danger[400]
-    : theme.colors.default[600];
+    ? theme.colors?.danger[400]
+    : theme.colors?.default[600];
 
 const paddingLeft = ({ iconVectorLeft, inputSize }: StyledInputProps) =>
   ({
@@ -100,8 +101,6 @@ const paddingRight = ({
 
 const StyledContainer = styled.div`
   position: relative;
-  // left: 500px;
-  // top: 200px;
   width: auto;
 `;
 
@@ -164,6 +163,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
       onFocus,
       onEnter,
       onClear,
+      ...props
     },
     ref
   ) => {
@@ -206,6 +206,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
           onChange={onChange}
           onFocus={onFocusHandler}
           onKeyDown={keyDownHandler}
+          {...props}
         />
         {iconVectorLeft && (
           <StyledIconLeft inputSize={size}>
