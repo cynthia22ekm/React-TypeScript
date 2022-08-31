@@ -16,9 +16,15 @@ function App() {
         iconVectorLeft={Ball}
         type={"text"}
         placeholder={"Enter Name"}
+        clearable={true}
+        iconVectorRight={Ball}
+        value={"Cynthia"}
       />
       <br />
+      <TextInput type={"text"} placeholder={"Enter Name"} />
+      <br />
       <Button label={"Submit"} size={"small"} palette={"default"} />
+      <br />
       <br />
       <Icon vector={Ball} />
     </div>

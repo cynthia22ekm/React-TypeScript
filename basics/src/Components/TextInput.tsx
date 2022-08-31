@@ -3,7 +3,6 @@ import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
 import { Ball } from "./SVG";
-import { StyledProps } from "./types";
 
 type InputSize = "small" | "large";
 
@@ -34,15 +33,12 @@ export type TextInputProps = {
 type StyledInputProps = Partial<Omit<TextInputProps, "size">> & {
   inputSize: InputSize;
   focused?: boolean;
-} & StyledProps;
+};
 
 type IconButtonProps = {
   inputSize?: InputSize;
   onClick?: (event: MouseEvent) => void;
 };
-
-const borderFocus = ({ theme }: StyledProps) =>
-  `1px solid ${theme.colors?.primary[400]}`;
 
 const height = ({ inputSize }: StyledInputProps) =>
   ({
@@ -94,7 +90,7 @@ const StyledInput = styled.input<StyledInputProps>`
   padding-right: ${paddingRight};
   width: 100%;
   &:focus {
-    border: ${borderFocus};
+    border: 1px solid red;
     outline: none;
   }
   &::placeholder {
@@ -114,18 +110,14 @@ const StyledIconLeft = styled.div<StyledInputProps>`
 const StyledIconButton = styled.button<IconButtonProps>`
   background: none;
   border: none;
-  cursor: pointer;
-  height: 16px;
-  padding: 0;
+  margin-top: 5px;
 `;
 
 const ShowPasswordButton = styled.button<IconButtonProps>`
   background: none;
   border: none;
-  cursor: pointer;
-  height: 16px;
-  padding: 0;
 `;
+
 const StyledIconRight = styled.div<StyledInputProps>`
   align-items: center;
   display: flex;
@@ -225,11 +217,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
         {(clearable || iconVectorRight || type === "password") && (
           <StyledIconRight inputSize={size}>
             {clearable && !!value && type !== "password" ? (
-              <StyledIconButton
-                type="button"
-                onClick={onClear}
-                data-testid="clear-button"
-              >
+              <StyledIconButton type="button" onClick={onClear}>
                 <Icon vector={Ball} />
               </StyledIconButton>
             ) : (
