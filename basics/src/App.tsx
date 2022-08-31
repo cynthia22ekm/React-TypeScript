@@ -5,19 +5,22 @@ import Button from "../src/Components/Button";
 import PractiseFieldArray from "./Practise/PractiseFieldArray";
 import PractiseFieldArrayWithNoRef from "./Practise/PractiseFieldArrayWithNoRef";
 import TextInput from "./Components/TextInput";
-import { Info } from "./Components/SVG";
+import { Ball } from "./Components/SVG";
+import Icon from "./Components/Icon";
 
 function App() {
   return (
     <div>
       <div>The Complete Components</div>
       <TextInput
-        iconVectorLeft={Info}
+        iconVectorLeft={Ball}
         type={"text"}
         placeholder={"Enter Name"}
       />
       <br />
       <Button label={"Submit"} size={"small"} palette={"default"} />
+      <br />
+      <Icon vector={Ball} />
     </div>
   );
 }
