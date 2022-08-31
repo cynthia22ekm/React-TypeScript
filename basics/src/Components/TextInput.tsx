@@ -84,7 +84,7 @@ const StyledIcon = styled(Icon)<StyledInputProps>`
   fill: purple;
 `;
 const StyledInput = styled.input<StyledInputProps>`
-  background: grey;
+  background: white;
   border: 1px solid;
   border-radius: 2px;
   box-sizing: border-box;
