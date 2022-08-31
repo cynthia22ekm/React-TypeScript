@@ -1,1 +1,1 @@
-export { ReactComponent as Info } from "./info.svg";
+export { ReactComponent as Ball } from "./ball.svg";

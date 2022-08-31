@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
+import { Ball } from "./SVG";
 import { StyledProps } from "./types";
 
 type InputSize = "small" | "large";
@@ -35,21 +36,13 @@ type StyledInputProps = Partial<Omit<TextInputProps, "size">> & {
   focused?: boolean;
 } & StyledProps;
 
-const background = ({ disabled, theme }: StyledInputProps) =>
-  disabled ? theme.colors?.default[100] : theme.colors?.default[200];
-
-const border = ({ hasErrors, theme }: StyledInputProps) =>
-  hasErrors
-    ? `1px solid ${theme.colors?.danger[400]}`
-    : "1px solid transparent";
+type IconButtonProps = {
+  inputSize?: InputSize;
+  onClick?: (event: MouseEvent) => void;
+};
 
 const borderFocus = ({ theme }: StyledProps) =>
   `1px solid ${theme.colors?.primary[400]}`;
-
-const borderRadius = ({ theme }: StyledProps) => theme.radius?.medium;
-
-const color = ({ disabled, theme }: StyledInputProps) =>
-  disabled ? theme.colors?.default[500] : theme.colors?.default[600];
 
 const height = ({ inputSize }: StyledInputProps) =>
   ({
@@ -57,28 +50,11 @@ const height = ({ inputSize }: StyledInputProps) =>
     small: "32px",
   }[inputSize]);
 
-const typography = ({ inputSize, theme }: StyledInputProps) =>
-  ({
-    large: theme.typography?.desktop["label large regular"],
-    small: theme.typography?.desktop["label small regular"],
-  }[inputSize]);
-
-const placeholderColor = ({ theme }: StyledProps) => theme.colors?.default[500];
-
 const iconPosition = ({ inputSize }: StyledInputProps) =>
   ({
     large: "16px",
     small: "12px",
   }[inputSize]);
-
-const iconColor = ({ disabled, focused, hasErrors, theme }: StyledInputProps) =>
-  disabled
-    ? theme.colors?.default[500]
-    : focused
-    ? theme.colors?.primary[400]
-    : hasErrors
-    ? theme.colors?.danger[400]
-    : theme.colors?.default[600];
 
 const paddingLeft = ({ iconVectorLeft, inputSize }: StyledInputProps) =>
   ({
@@ -105,25 +81,24 @@ const StyledContainer = styled.div`
 `;
 
 const StyledIcon = styled(Icon)<StyledInputProps>`
-  fill: ${iconColor};
+  fill: purple;
 `;
 const StyledInput = styled.input<StyledInputProps>`
-  background: ${background};
-  border: ${border};
-  border-radius: ${borderRadius};
+  background: grey;
+  border: 1px solid;
+  border-radius: 2px;
   box-sizing: border-box;
-  color: ${color};
+  color: black;
   height: ${height};
   padding-left: ${paddingLeft};
   padding-right: ${paddingRight};
   width: 100%;
-  ${typography};
   &:focus {
     border: ${borderFocus};
     outline: none;
   }
   &::placeholder {
-    color: ${placeholderColor};
+    color: black;
   }
 `;
 
@@ -133,6 +108,30 @@ const StyledIconLeft = styled.div<StyledInputProps>`
   height: ${height};
   left: ${iconPosition};
   position: absolute;
+  top: 0;
+`;
+
+const StyledIconButton = styled.button<IconButtonProps>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  padding: 0;
+`;
+
+const ShowPasswordButton = styled.button<IconButtonProps>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 16px;
+  padding: 0;
+`;
+const StyledIconRight = styled.div<StyledInputProps>`
+  align-items: center;
+  display: flex;
+  height: ${height};
+  position: absolute;
+  right: ${iconPosition};
   top: 0;
 `;
 
@@ -182,6 +181,10 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
       console.log("Key Down Handler");
     };
 
+    const showPasswordClickHandler = () => {
+      console.log("Password click handler");
+    };
+
     return (
       <StyledContainer className={className}>
         <StyledInput
@@ -218,6 +221,38 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
               vector={iconVectorLeft}
             />
           </StyledIconLeft>
+        )}
+        {(clearable || iconVectorRight || type === "password") && (
+          <StyledIconRight inputSize={size}>
+            {clearable && !!value && type !== "password" ? (
+              <StyledIconButton
+                type="button"
+                onClick={onClear}
+                data-testid="clear-button"
+              >
+                <Icon vector={Ball} />
+              </StyledIconButton>
+            ) : (
+              iconVectorRight &&
+              type !== "password" && (
+                <StyledIcon
+                  disabled={disabled}
+                  focused={focused}
+                  hasErrors={hasErrors}
+                  inputSize={size}
+                  vector={iconVectorRight}
+                />
+              )
+            )}
+            {type === "password" && (
+              <ShowPasswordButton
+                type="button"
+                onClick={showPasswordClickHandler}
+              >
+                <Icon vector={Ball} />
+              </ShowPasswordButton>
+            )}
+          </StyledIconRight>
         )}
       </StyledContainer>
     );
