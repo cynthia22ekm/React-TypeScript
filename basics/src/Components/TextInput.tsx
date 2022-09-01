@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
-import { Ball } from "./SVG";
+import { Ball, Hide, Show } from "./SVG";
 
 type InputSize = "small" | "large";
 
@@ -17,7 +17,7 @@ export type TextInputProps = {
   iconVectorLeft?: ElementType;
   id?: string;
   hasErrors?: boolean;
-  helperMessage?: string;
+  errorMessage?: string;
   maxLength?: number;
   ref?: ForwardedRef<HTMLInputElement>; //This is used to provide focus in some cases ref.current.focus()
   required?: boolean;
@@ -26,7 +26,7 @@ export type TextInputProps = {
   value?: string;
   onChange?: (event?: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event?: FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (event?: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
   onEnter?: () => void;
   onClear?: () => void;
 };
@@ -71,6 +71,9 @@ const paddingRight = ({
       iconVectorRight || clearable || type === "password" ? "36px" : "12px",
   }[inputSize]);
 
+const borderFocus = ({ focused }: StyledInputProps) =>
+  focused && "2px solid red";
+
 const StyledContainer = styled.div`
   position: relative;
   width: auto;
@@ -90,8 +93,9 @@ const StyledInput = styled.input<StyledInputProps>`
   padding-right: ${paddingRight};
   width: 100%;
   &:focus {
-    border: 1px solid red;
+    border: ${borderFocus};
     outline: none;
+    background-color: lightblue;
   }
   &::placeholder {
     color: black;
@@ -114,8 +118,8 @@ const StyledIconButton = styled.button<IconButtonProps>`
 `;
 
 const ShowPasswordButton = styled.button<IconButtonProps>`
-  background: none;
-  border: none;
+  background: grey;
+  border: 1px solid black;
 `;
 
 const StyledIconRight = styled.div<StyledInputProps>`
@@ -126,6 +130,14 @@ const StyledIconRight = styled.div<StyledInputProps>`
   right: ${iconPosition};
   top: 0;
 `;
+
+const StyledErrorMessage = styled.div<StyledInputProps>((props) => {
+  const { hasErrors } = props;
+
+  return `
+    color: ${hasErrors ? "red" : "yellow"};
+`;
+});
 
 const TextInput: React.FC<TextInputProps> = React.forwardRef<
   HTMLInputElement,
@@ -143,7 +155,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
       iconVectorLeft,
       id,
       hasErrors = false,
-      helperMessage,
+      errorMessage,
       maxLength,
       required,
       size = "small",
@@ -158,23 +170,26 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
     },
     ref
   ) => {
-    const [focused, setFocused] = useState(false);
+    const [focusedState, setFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
     const onBlurHandler = () => {
-      console.log("Blur Handler");
+      setFocused(false);
     };
 
-    const onFocusHandler = () => {
-      console.log("Focus Handler");
+    const onFocusHandler = (event: FocusEvent<HTMLInputElement>) => {
+      setFocused(true);
+      onFocus && onFocus(event);
     };
 
-    const keyDownHandler = () => {
-      console.log("Key Down Handler");
+    const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (onEnter) {
+        onEnter();
+      }
     };
 
     const showPasswordClickHandler = () => {
-      console.log("Password click handler");
+      setShowPassword(!showPassword);
     };
 
     return (
@@ -193,6 +208,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
           ref={ref}
           required={required}
           value={value}
+          focused={focusedState}
           maxLength={maxLength}
           type={
             type === "password" ? (showPassword ? "text" : "password") : type
@@ -207,7 +223,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
           <StyledIconLeft inputSize={size}>
             <StyledIcon
               disabled={disabled}
-              focused={focused}
+              focused={focusedState}
               hasErrors={hasErrors}
               inputSize={size}
               vector={iconVectorLeft}
@@ -225,7 +241,7 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
               type !== "password" && (
                 <StyledIcon
                   disabled={disabled}
-                  focused={focused}
+                  focused={focusedState}
                   hasErrors={hasErrors}
                   inputSize={size}
                   vector={iconVectorRight}
@@ -237,10 +253,15 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
                 type="button"
                 onClick={showPasswordClickHandler}
               >
-                <Icon vector={Ball} />
+                <Icon vector={showPassword ? Show : Hide} />
               </ShowPasswordButton>
             )}
           </StyledIconRight>
+        )}
+        {hasErrors && (
+          <StyledErrorMessage inputSize={size} hasErrors={hasErrors}>
+            {errorMessage}
+          </StyledErrorMessage>
         )}
       </StyledContainer>
     );
