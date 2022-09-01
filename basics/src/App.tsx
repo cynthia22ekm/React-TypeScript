@@ -23,6 +23,25 @@ function App() {
       <br />
       <TextInput type={"text"} placeholder={"Enter Name"} />
       <br />
+      <TextInput
+        iconVectorLeft={Ball}
+        type={"password"}
+        placeholder={"Enter Name"}
+        clearable={true}
+        iconVectorRight={Ball}
+      />
+      <br />
+      <TextInput
+        iconVectorLeft={Ball}
+        type={"text"}
+        placeholder={"Enter Name"}
+        clearable={true}
+        iconVectorRight={Ball}
+        value={"Cynthia"}
+        errorMessage={"This value is incorrect"}
+        hasErrors={true}
+      />
+      <br />
       <Button label={"Submit"} size={"small"} palette={"default"} />
       <br />
       <br />
