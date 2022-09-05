@@ -7,8 +7,15 @@ import PractiseFieldArrayWithNoRef from "./Practise/PractiseFieldArrayWithNoRef"
 import TextInput from "./Components/TextInput";
 import { Ball } from "./Components/SVG";
 import Icon from "./Components/Icon";
+import DropDown from "./Components/Dropdown/DropDown";
 
 function App() {
+  const items = [
+    { name: "India" },
+    { name: "Germany" },
+    { name: "USA" },
+    { name: "UK" },
+  ];
   return (
     <div>
       <div>The Complete Components</div>
@@ -46,6 +53,9 @@ function App() {
       <br />
       <br />
       <Icon vector={Ball} />
+      <br />
+      <br />
+      <DropDown title={"Please select a Country"} items={items} />
     </div>
   );
 }
