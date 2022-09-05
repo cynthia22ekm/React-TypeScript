@@ -10,7 +10,7 @@ export type DropDownProps = {
 };
 
 const StyledDiv = styled.div`
-  margin-left: 150px;
+  margin-left: 550px;
 `;
 
 const StyledTitle = styled.div`
@@ -27,7 +27,6 @@ const DropDown: React.FC<DropDownProps> = ({ title, items }) => {
 
   const SelectDropDownItemHandler = useCallback(
     (item: string) => {
-      console.log("The selected item is: ", item);
       setItem(item);
       setPopup(false);
     },
