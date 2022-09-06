@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import Button from "../Components/Button";
 import TextInput from "../Components/TextInput";
 
@@ -8,7 +9,6 @@ const SimpleForm: React.FC = () => {
 
   const SetNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
-    console.log("Entered value is ", name);
   };
 
   const SetAgeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,16 +21,20 @@ const SimpleForm: React.FC = () => {
     console.log("The age is ", age);
   };
 
+  const StyledTextInput = styled(TextInput)`
+    margin: 20px;
+  `;
+
   return (
     <form onSubmit={FormSubmitHandler}>
-      <TextInput
+      <StyledTextInput
         type={"text"}
         placeholder={"Enter Name"}
         clearable={true}
         value={name}
         onChange={SetNameHandler}
       />
-      <TextInput
+      <StyledTextInput
         type={"text"}
         placeholder={"Enter Age"}
         clearable={true}
