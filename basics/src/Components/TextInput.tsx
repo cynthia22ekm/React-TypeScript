@@ -24,7 +24,7 @@ export type TextInputProps = {
   size?: InputSize;
   type?: string;
   value?: string;
-  onChange?: (event?: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event?: FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
   onEnter?: () => void;
