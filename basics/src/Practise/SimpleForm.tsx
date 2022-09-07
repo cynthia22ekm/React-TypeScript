@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import { productsApi } from "../API/api";
 import Button from "../Components/Button";
 import TextInput from "../Components/TextInput";
 
 const SimpleForm: React.FC = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const { data: Products } = productsApi.useGetProductsQuery();
 
   const SetNameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -19,22 +20,20 @@ const SimpleForm: React.FC = () => {
     event.preventDefault();
     console.log("The name is ", name);
     console.log("The age is ", age);
-  };
 
-  const StyledTextInput = styled(TextInput)`
-    margin: 20px;
-  `;
+    console.log("The data is ", Products);
+  };
 
   return (
     <form onSubmit={FormSubmitHandler}>
-      <StyledTextInput
+      <TextInput
         type={"text"}
         placeholder={"Enter Name"}
         clearable={true}
         value={name}
         onChange={SetNameHandler}
       />
-      <StyledTextInput
+      <TextInput
         type={"text"}
         placeholder={"Enter Age"}
         clearable={true}
