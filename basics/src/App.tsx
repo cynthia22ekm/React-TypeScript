@@ -4,11 +4,12 @@ import { productsApi } from "./API/api";
 import "./App.css";
 import AllComponents from "./Components/AllComponents";
 import SimpleForm from "./Practise/SimpleForm";
+import ProductsTable from "./Practise/Table/ProductsTable";
 
 function App() {
   return (
     <ApiProvider api={productsApi}>
-      <SimpleForm />
+      <ProductsTable />
     </ApiProvider>
   );
 }
