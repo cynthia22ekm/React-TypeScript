@@ -1,3 +1,8 @@
+//Reference taken from https://www.youtube.com/watch?v=dH6i3GurZW8. useEffect has an empty dependency array. Hence it will
+//only be rendered once with the initial value of 'val'. Hence when we try to console.log(val) inside useEffect, we always get
+//the value 1. But when the output the value of val inside return, it will display the value like a counter
+//This is because the setInterval runs evenry seconds even if its inside useEffect.
+
 import { useEffect, useState } from "react";
 
 const UseEffect: React.FC = () => {
@@ -11,7 +16,7 @@ const UseEffect: React.FC = () => {
     }, 1000);
   }, []);
 
-  return <div></div>;
+  return <div>{val}</div>;
 };
 
 export default UseEffect;
