@@ -1,9 +1,7 @@
 //Reference taken from https://react-table-v7.tanstack.com/docs/api/useTable,//https://github.com/TanStack/table/discussions/2664
 
-import { Column, useTable } from "react-table";
+import { useTable } from "react-table";
 import styled from "styled-components";
-import { productsApi } from "../../API/api";
-import { Products } from "../../API/api";
 import { columns } from "./Columns";
 import { data } from "./Data";
 

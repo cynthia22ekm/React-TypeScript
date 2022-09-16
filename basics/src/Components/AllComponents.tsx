@@ -1,6 +1,4 @@
 import Button from "./Button";
-import PractiseFieldArray from "../Practise/PractiseFieldArray";
-import PractiseFieldArrayWithNoRef from "../Practise/PractiseFieldArrayWithNoRef";
 import TextInput from "./TextInput";
 import { Ball } from "./SVG";
 import Icon from "./Icon";
