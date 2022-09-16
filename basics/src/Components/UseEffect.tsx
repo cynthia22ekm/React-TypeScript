@@ -2,6 +2,7 @@
 //only be rendered once with the initial value of 'val'. Hence when we try to console.log(val) inside useEffect, we always get
 //the value 1. But when the output the value of val inside return, it will display the value like a counter
 //This is because the setInterval runs evenry seconds even if its inside useEffect.
+//https://typeofnan.dev/fix-the-maximum-update-depth-exceeded-error-in-react/
 
 import { useEffect, useState } from "react";
 
