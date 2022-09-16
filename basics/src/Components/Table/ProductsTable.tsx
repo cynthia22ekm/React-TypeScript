@@ -1,4 +1,5 @@
 //Reference taken from https://react-table-v7.tanstack.com/docs/api/useTable,//https://github.com/TanStack/table/discussions/2664
+//https://www.youtube.com/watch?v=CQ165vFGLVs&list=PLC3y8-rFHvwgWTSrDiwmUsl4ZvipOw9Cz&index=4
 
 import { useTable } from "react-table";
 import styled from "styled-components";
@@ -10,6 +11,7 @@ const ProductsTable: React.FC = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    footerGroups,
     rows,
     prepareRow,
   } = useTable({
@@ -26,10 +28,17 @@ const ProductsTable: React.FC = () => {
 
   const Styledth = styled.th`
     border: 1px solid black;
+    background: green;
   `;
 
   const Styledtd = styled.td`
     border: 1px solid black;
+    text-align: center;
+  `;
+
+  const StyledFooter = styled.tfoot`
+    background: green;
+    font-weight: bold;
   `;
 
   return (
@@ -61,6 +70,17 @@ const ProductsTable: React.FC = () => {
           );
         })}
       </tbody>
+      <StyledFooter>
+        {footerGroups.map((footerGroup) => (
+          <tr {...footerGroup.getFooterGroupProps()}>
+            {footerGroup.headers.map((column) => (
+              <Styledtd {...column.getFooterProps}>
+                {column.render("Footer")}
+              </Styledtd>
+            ))}
+          </tr>
+        ))}
+      </StyledFooter>
     </StyledTable>
   );
 };
