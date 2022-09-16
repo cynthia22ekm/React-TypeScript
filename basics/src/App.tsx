@@ -11,7 +11,7 @@ import ProductsTable from "./Practise/Table/ProductsTable";
 function App() {
   return (
     <ApiProvider api={productsApi}>
-      <TestUseCallBack />
+      <ProductsTable />
     </ApiProvider>
   );
 }
