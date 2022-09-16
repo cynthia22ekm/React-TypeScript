@@ -1,12 +1,11 @@
-//Reference taken from https://react-table-v7.tanstack.com/docs/api/useTable,
+//Reference taken from https://react-table-v7.tanstack.com/docs/api/useTable,//https://github.com/TanStack/table/discussions/2664
 
 import { Column, useTable } from "react-table";
+import styled from "styled-components";
 import { productsApi } from "../../API/api";
 import { Products } from "../../API/api";
 import { columns } from "./Columns";
 import { data } from "./Data";
-
-//https://github.com/TanStack/table/discussions/2664
 
 const ProductsTable: React.FC = () => {
   const {
@@ -20,13 +19,30 @@ const ProductsTable: React.FC = () => {
     data,
   });
 
+  const StyledTable = styled.table`
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-top: 50px;
+    border-collapse: collapse;
+  `;
+
+  const Styledth = styled.th`
+    border: 1px solid black;
+  `;
+
+  const Styledtd = styled.td`
+    border: 1px solid black;
+  `;
+
   return (
-    <table {...getTableProps()}>
+    <StyledTable {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <Styledth {...column.getHeaderProps()}>
+                {column.render("Header")}
+              </Styledth>
             ))}
           </tr>
         ))}
@@ -37,13 +53,17 @@ const ProductsTable: React.FC = () => {
           return (
             <tr {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                return (
+                  <Styledtd {...cell.getCellProps()}>
+                    {cell.render("Cell")}
+                  </Styledtd>
+                );
               })}
             </tr>
           );
         })}
       </tbody>
-    </table>
+    </StyledTable>
   );
 };
 
