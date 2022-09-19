@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
-import Icon from "./Icon";
-import { Ball, Hide, Show } from "./SVG";
+import Icon from "../Icon/Icon";
+import { Ball, Hide, Show } from "../SVG";
 
 type InputSize = "small" | "large";
 
