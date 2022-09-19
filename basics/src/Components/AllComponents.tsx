@@ -1,10 +1,12 @@
-import Button from "./Button";
-import TextInput from "./TextInput";
+import Button from "./Button/Button";
+import TextInput from "./TextInput/TextInput";
 import { Ball } from "./SVG";
-import Icon from "./Icon";
+import Icon from "./Icon/Icon";
 import DropDown from "./Dropdown/DropDown";
 import styled from "styled-components";
 import RadioButton from "./RadioButton/RadioButton";
+import SelectBox, { SelectOption } from "./SelectBox/SelectBox";
+import { SingleValue } from "react-select";
 
 const StyledHeading = styled.div`
   margin-left: 550px;
@@ -18,6 +20,16 @@ const AllComponents: React.FC = () => {
     { name: "USA" },
     { name: "UK" },
   ];
+
+  const SelectOptions = [
+    { key: "IND", value: "India", label: "India" },
+    { key: "DE", value: "Germany", label: "Germany" },
+    { key: "USA", value: "America", label: "America" },
+  ];
+
+  const getSelectedValue = (value: SingleValue<SelectOption>) => {
+    console.log("The selected value is", value);
+  };
 
   return (
     <div>
@@ -53,13 +65,20 @@ const AllComponents: React.FC = () => {
         hasErrors={true}
       />
       <br />
-      <Button label={"Button Component"} size={"large"} palette={"default"} />
+      <SelectBox
+        options={SelectOptions}
+        name="Countries"
+        placeholder="Select Country"
+        onChange={getSelectedValue}
+      />
+      <br />
+      <Button label="Button Component" size="large" palette="default" />
       <br />
       <br />
       <Icon vector={Ball} />
       <br />
       <br />
-      <DropDown title={"Please select a Country"} items={items} />
+      <DropDown title="Please select a Country" items={items} />
       <br />
       <br />
 
