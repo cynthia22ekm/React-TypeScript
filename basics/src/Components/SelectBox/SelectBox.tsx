@@ -1,4 +1,5 @@
 import Select, { SingleValue } from "react-select";
+import styled from "styled-components";
 
 export type SelectOption = {
   key: string;
@@ -14,7 +15,7 @@ export type SelectBoxProps = {
   name: string;
   placeholder: string;
   value?: SelectOption;
-  onChange: (value: SingleValue<SelectOption>) => void;
+  onChange: (selected: SingleValue<SelectOption>) => void;
 };
 
 const SelectBox: React.FC<SelectBoxProps> = ({
