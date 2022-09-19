@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { productsApi } from "../API/api";
-import Button from "../Components/Button";
-import TextInput from "../Components/TextInput";
+import Button from "../Components/Button/Button";
+import TextInput from "../Components/TextInput/TextInput";
 
 const SimpleForm: React.FC = () => {
   const [name, setName] = useState("");

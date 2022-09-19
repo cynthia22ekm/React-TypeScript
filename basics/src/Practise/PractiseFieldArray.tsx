@@ -1,6 +1,6 @@
 import {useFieldArray, useForm} from 'react-hook-form'
 import styled from 'styled-components'
-import Button from '../Components/Button'
+import Button from '../Components/Button/Button'
 
 
 type FormType = {
