@@ -1,4 +1,4 @@
-import Select, { SingleValue } from "react-select";
+import Select from "react-select";
 import styled from "styled-components";
 
 export type SelectOption = {
@@ -15,8 +15,12 @@ export type SelectBoxProps = {
   name: string;
   placeholder: string;
   value?: SelectOption;
-  onChange: (selected: SingleValue<SelectOption>) => void;
+  onChange: (selected: SelectOption | unknown) => void;
 };
+
+const StyledSelect = styled(Select)<SelectBoxProps>`
+  color: red;
+`;
 
 const SelectBox: React.FC<SelectBoxProps> = ({
   options,
@@ -29,8 +33,9 @@ const SelectBox: React.FC<SelectBoxProps> = ({
   onChange,
 }) => {
   return (
-    <Select
+    <StyledSelect
       options={options}
+      classNamePrefix={"select"}
       className={className}
       isDisabled={isDisabled}
       isSearchable={isSearchable}
@@ -38,7 +43,7 @@ const SelectBox: React.FC<SelectBoxProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-    ></Select>
+    />
   );
 };
 

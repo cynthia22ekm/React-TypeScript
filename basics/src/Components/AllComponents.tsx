@@ -7,6 +7,7 @@ import styled from "styled-components";
 import RadioButton from "./RadioButton/RadioButton";
 import SelectBox, { SelectOption } from "./SelectBox/SelectBox";
 import { SingleValue } from "react-select";
+import { ChangeEventHandler } from "react";
 
 const StyledHeading = styled.div`
   margin-left: 550px;
@@ -27,12 +28,17 @@ const AllComponents: React.FC = () => {
     { key: "USA", value: "America", label: "America" },
   ];
 
-  const getSelectedValue = (value: SingleValue<SelectOption>) => {
+  const getSelectedValue = (value: SelectOption | unknown) => {
     console.log("The selected value is", value);
+  };
+
+  const getText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    return console.log("The event in all components", event.target.value);
   };
 
   return (
     <div>
+      <input onChange={getText}></input>
       <StyledHeading>The Complete Components</StyledHeading>
       <TextInput
         iconVectorLeft={Ball}
