@@ -12,14 +12,17 @@ export type SelectBoxProps = {
   className?: string;
   isDisabled?: boolean;
   isSearchable?: boolean;
-  name: string;
+  name?: string;
   placeholder: string;
   value?: SelectOption;
-  onChange: (selected: SelectOption | unknown) => void;
+  onChange: (selected?: SelectOption | unknown) => void;
 };
 
 const StyledSelect = styled(Select)<SelectBoxProps>`
   color: red;
+  .select__control {
+    color: green;
+  }
 `;
 
 const SelectBox: React.FC<SelectBoxProps> = ({

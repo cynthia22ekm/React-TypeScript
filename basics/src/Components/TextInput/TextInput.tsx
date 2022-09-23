@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { ExoticComponent, useState } from "react";
 import { ChangeEvent, FocusEvent, ElementType, ForwardedRef } from "react";
 import styled from "styled-components";
+import { StyledProps } from "../types";
 import Icon from "../Icon/Icon";
 import { Ball, Hide, Show } from "../SVG";
 
@@ -24,16 +25,16 @@ export type TextInputProps = {
   size?: InputSize;
   type?: string;
   value?: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event?: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event?: FocusEvent<HTMLInputElement>) => void;
-  onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (event?: FocusEvent<HTMLInputElement>) => void;
   onEnter?: () => void;
   onClear?: () => void;
 };
 type StyledInputProps = Partial<Omit<TextInputProps, "size">> & {
   inputSize: InputSize;
   focused?: boolean;
-};
+} & StyledProps;
 
 type IconButtonProps = {
   inputSize?: InputSize;
@@ -173,11 +174,10 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
     const [focusedState, setFocused] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    const onBlurHandler = () => {
-      setFocused(false);
-    };
-
-    const onFocusHandler = (event: FocusEvent<HTMLInputElement>) => {
+    const blurHandler = (event: FocusEvent<HTMLInputElement> | undefined) => [
+      setFocused(false),
+    ];
+    const focusHandler = (event: FocusEvent<HTMLInputElement> | undefined) => {
       setFocused(true);
       onFocus && onFocus(event);
     };
@@ -208,14 +208,13 @@ const TextInput: React.FC<TextInputProps> = React.forwardRef<
           ref={ref}
           required={required}
           value={value}
-          focused={focusedState}
           maxLength={maxLength}
           type={
             type === "password" ? (showPassword ? "text" : "password") : type
           }
-          onBlur={onBlurHandler}
+          onBlur={blurHandler}
           onChange={onChange}
-          onFocus={onFocusHandler}
+          onFocus={focusHandler}
           onKeyDown={keyDownHandler}
           {...props}
         />
